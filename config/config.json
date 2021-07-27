@@ -1,0 +1,23 @@
+{
+    "development": {
+        "username": "lcmdnnpl",
+        "password": "tVNxAwIcfobdemXqgWDslyMxZ9Lg9WWI",
+        "database": "lcmdnnpl",
+        "host": "batyr.db.elephantsql.com",
+        "dialect": "postgres"
+    },
+    "test": {
+        "username": "lcmdnnpl",
+        "password": "tVNxAwIcfobdemXqgWDslyMxZ9Lg9WWI",
+        "database": "lcmdnnpl",
+        "host": "batyr.db.elephantsql.com",
+        "dialect": "postgres"
+    },
+    "production": {
+        "username": "lcmdnnpl",
+        "password": "tVNxAwIcfobdemXqgWDslyMxZ9Lg9WWI",
+        "database": "lcmdnnpl",
+        "host": "batyr.db.elephantsql.com",
+        "dialect": "postgres"
+    }
+}
