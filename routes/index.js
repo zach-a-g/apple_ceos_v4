@@ -1,37 +1,20 @@
 `use strict`
 
 const express = require('express');
-const { default: slugify } = require('slugify');
+const slugify = require('slugify');
 const router = express.Router();
-const ExecutiveModel = require('../models/ExecutiveModel');
+const { ceos } = require('../models');
 
 router.get('/:slug?', async(req, res) => {
     if (!!req.params.slug) {
         const { slug } = req.params;
-        const theCEO = await ExecutiveModel.getBySlug(slug);
+        const theCEO = await ceos.findOne({ where: { slug } });
 
-        res.render('template', {
-            locals: {
-                title: 'CEO DETAILS',
-                ceo: theCEO
-            },
-            partials: {
-                body: 'partials/ceo-details',
-            }
-        });
+        res.json(theCEO).status(200);
     } else {
-        const ExecutiveData = await ExecutiveModel.getAll();
-
-        res.render('template', {
-            locals: {
-                title: 'Home Page',
-                data: ExecutiveData
-
-            },
-            partials: {
-                body: 'partials/home',
-            },
-        });
+        const ExecutiveData = await ceos.findAll();
+        console.log(ExecutiveData);
+        res.json(ExecutiveData).status(200);
     }
 
 });
@@ -45,19 +28,25 @@ router.post(`/`, async(req, res) => {
         strict: true
     });
 
-    const newExecutive = new ExecutiveModel(null, ceo_name, slug, ceo_year);
-
-    const response = await newExecutive.addEntry();
-    res.sendStatus(200);
+    const response = await ceos.create({
+        name: ceo_name,
+        slug: slug,
+        first_year_active: ceo_year
+    });
+    console.log("Response on new: ", response);
+    res.redirect('/');
 });
 
 router.post('/delete', async(req, res) => {
     const { id, ceo_name, slug, ceo_year } = req.body;
 
-    const executiveToDelete = new ExecutiveModel(id, ceo_name, slug, ceo_year);
-    const response = await executiveToDelete.deleteEntry();
+
+    const response = await ceos.destroy({
+        where: { id },
+    });
+
     console.log("DELETE ROUTE RESPONSE IS: ", response);
-    res.sendStatus(200);
-})
+    res.redirect('/');
+});
 
 module.exports = router;
