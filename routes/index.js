@@ -10,28 +10,13 @@ router.get('/:slug?', async(req, res) => {
         const { slug } = req.params;
         const theCEO = await ExecutiveModel.getBySlug(slug);
 
-        res.render('template', {
-            locals: {
-                title: 'CEO DETAILS',
-                ceo: theCEO
-            },
-            partials: {
-                body: 'partials/ceo-details',
-            }
-        });
+        res.json(theCeo).status(200);
+        
     } else {
         const ExecutiveData = await ExecutiveModel.getAll();
 
-        res.render('template', {
-            locals: {
-                title: 'Home Page',
-                data: ExecutiveData
-
-            },
-            partials: {
-                body: 'partials/home',
-            },
-        });
+        res.json(ExecutiveData).status(200);
+        
     }
 
 });

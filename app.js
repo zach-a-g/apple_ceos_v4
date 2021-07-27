@@ -5,11 +5,15 @@ const http = require('http');
 const hostname = '127.0.0.1';
 const port = 3000;
 
+const cors = require('cors');
+
 const express = require('express');
 const app = express();
 
 const helmet = require('helmet');
 app.use(helmet());
+
+app.use(cors());
 
 const morgan = require('morgan');
 const logger = morgan('tiny');
@@ -19,10 +23,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static('public'));
 
-const es6Renderer = require('express-es6-template-engine');
-app.engine('html', es6Renderer);
-app.set('views', './views');
-app.set('view engine', 'html');
+// const es6Renderer = require('express-es6-template-engine');
+// app.engine('html', es6Renderer);
+// app.set('views', './views');
+// app.set('view engine', 'html');
 
 const server = http.createServer(app);
 
